@@ -16,8 +16,9 @@ minimal_mistakes_skin    : "dark" # "air", "aqua", "contrast", "dark", "dirt", "
 
 # Site Settings
 locale                   : "en-US"
-title                    : "P`S Note"
+title                    : "PS Note"
 title_separator          : "-"
+future                   : true
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Pedro"
 description              : "Pedro`s Security"
@@ -107,7 +108,7 @@ author:
   name             : "Pedro"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
   bio              : "I am an **amazing** person."
-  location         : "P`S"
+  location         : ""
   email            :
   links:
     - label: "Email"
