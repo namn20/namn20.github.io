@@ -1,10 +1,10 @@
 # main links
 main:
-  - title: "Home"
+  - title: "블로그 방문하기"
   url: https://namn20.github.io
   - title: "About"
   url: /about/
-  
+
   # - title: "Blog"
   #   url: /year-archive/
   # - title: "Sample Collections"
