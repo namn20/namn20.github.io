@@ -5,5 +5,5 @@ main:
   - title: "Posts"
     url: /year-archive/
   - title: "Collections"
-    url: /categories-archive/ 
+    url: /category-archive/ 
 
