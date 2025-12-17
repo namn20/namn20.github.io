@@ -1,20 +1,15 @@
-# main navigation
+# 메인 메뉴 설정
 main:
-  # 1. 소개 메뉴 (기본 about.md 파일과 연결)
   - title: "About"
     url: https://namn20.github.io/about/
 
-  # 2. 보안 메뉴 (드롭다운 구조를 위한 메인 항목)
   - title: "Security"
-    url: # #을 넣으면 클릭 시 페이지 이동 없이 하위 메뉴만 표시됩니다.
+    url: /security/
     children:
-      # 2.1 관리 서브 메뉴
-      - title: "2.1 Mgmt."
+      - title: "관리"
         url: /security/management/
-      # 2.2 기술 서브 메뉴
-      - title: "2.2 Tech."
-        url: /security/technical/
+      - title: "기술"
+        url: /security/tech/
 
-  # 3. 기타 메뉴
-  - title: "기타"
-    url: /others/
+  - title: "Etc"
+    url: /etc/
