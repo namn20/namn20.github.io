@@ -1,7 +1,9 @@
 ---
-title: "About me"
+title: "About"
 permalink: /about/
 layout: single
+sidebar:
+  nav: "main"
 ---
 
 ## About
@@ -9,4 +11,5 @@ layout: single
 여기는 저를 소개하는 페이지입니다.
 
 * 보안전문가 Pedro
+
 
