@@ -20,8 +20,8 @@ github:
 social:
   name: Pedro Yoon
   email: namn20@naver.com
-#  links:
-#    -
+  links:
+    - https://github.com/namn20  # 본인 주소 하나만 남겨두세요.
 
 # Web Analytics Settings
 analytics:
