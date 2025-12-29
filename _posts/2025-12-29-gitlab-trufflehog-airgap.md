@@ -6,7 +6,7 @@ categories: [Tech-Security]
 tags: [gitlab, trufflehog, air-gapped, security-scanning]
 render_with_liquid: false
 ---
-
+ 
 폐쇄망(Air-gapped) 환경은 보안상 안전하지만, 최신 보안 도구를 도입하기에는 제약이 많습니다. 특히 소스코드 내에 실수로 포함된 API Key, 패스워드 등을 찾아내는 **TruffleHog**를 GitLab CI/CD에 통합하는 방법을 정리합니다.
 
 ## 1. 사전 준비 (외부망 작업)
