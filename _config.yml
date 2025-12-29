@@ -20,7 +20,7 @@ github:
 social:
   name: Pedro Yoon
   email: namn20@naver.com
-  links: [] 
+  links: [] # 이 부분을 정확히 이렇게 [ ] 대괄호로 비워주세요.
 
 # Web Analytics Settings
 analytics:
