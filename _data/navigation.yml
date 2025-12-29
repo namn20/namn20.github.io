@@ -1,0 +1,24 @@
+# 왼쪽 사이드바 메뉴 설정
+- title: HOME
+  url: /
+  icon: fas fa-home
+
+- title: CATEGORIES
+  url: /categories/
+  icon: fas fa-stream
+
+- title: TAGS
+  url: /tags/
+  icon: fas fa-tags
+
+- title: ARCHIVES
+  url: /archives/
+  icon: fas fa-archive
+
+- title: ABOUT
+  url: /tabs/about/
+  icon: fas fa-info-circle
+
+- title: SECURITY
+  url: /categories/security/
+  icon: fas fa-shield-alt
