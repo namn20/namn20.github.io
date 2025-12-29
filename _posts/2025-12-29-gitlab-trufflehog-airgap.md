@@ -15,18 +15,16 @@ mermaid: true
 
 TruffleHog는 Go 언어로 빌드되어 의존성 없는 단일 실행 파일(Binary)로 제공되나, 룰셋 수정(소스 코드 수정) 시 재빌드가 필요합니다. 폐쇄망 내부에는 `go get`을 위한 인터넷 연결이 없으므로, 외부에서 모든 라이브러리를 하나로 묶는 **벤더링(Vendoring)** 작업을 수행합니다.
 
-### 소스코드 및 의존성 다운로드
-외부망 환경에서 소스를 클론하고 필요한 패키지를 로컬로 가져옵니다.
+### 1. 소스코드 다운로드
 
 ```bash
-# 1. 소스코드 다운로드 
 git clone [https://github.com/trufflesecurity/trufflehog.git](https://github.com/trufflesecurity/trufflehog.git)
 cd trufflehog
 
-# 2. 의존성 패키지 다운로드 (Vendor 처리)
-이 명령어를 실행하면 vendor/ 폴더 내에 모든 외부 라이브러리(go.mod에 명시된 패키지들)가 다운로드됩니다.
+```
+### 2. 의존성 패키지 다운로드 (Vendor 처리)
 ```bash
-go mod vendor
+o mod vendor
 
 ```
 
