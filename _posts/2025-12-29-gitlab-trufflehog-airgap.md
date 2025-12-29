@@ -1,7 +1,4 @@
 ---
-
-```markdown
----
 title: 폐쇄망 GitLab 환경에서 TruffleHog로 시크릿 스캐닝 구축하기
 author: Pedro
 date: 2025-12-29 70:00:00 +0900
