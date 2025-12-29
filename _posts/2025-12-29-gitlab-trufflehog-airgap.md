@@ -24,6 +24,8 @@ git clone [https://github.com/trufflesecurity/trufflehog.git](https://github.com
 cd trufflehog
 
 # 2. 의존성 패키지 다운로드 (Vendor 처리)
+이 명령어를 실행하면 vendor/ 폴더 내에 모든 외부 라이브러리(go.mod에 명시된 패키지들)가 다운로드됩니다.
+```bash
 go mod vendor
 
 ```
