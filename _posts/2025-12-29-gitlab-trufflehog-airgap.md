@@ -47,3 +47,5 @@ go build -mod=vendor -o trufflehog main.go
 ```
 
 ---
+
+## 3. 폐쇄망 작업 (GitLab)
