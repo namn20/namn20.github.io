@@ -1,6 +1,7 @@
 ---
 title: 목차 테스트
 date: 2025-01-01 12:00:00 +0900
+layout: post
 categories: [Test]
 tags: [Test]
 toc: true
