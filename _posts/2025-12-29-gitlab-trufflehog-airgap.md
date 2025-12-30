@@ -6,8 +6,9 @@ tags: [gitlab, trufflehog, air-gapped, security, binary, devsecops]
 pin: false
 math: false
 mermaid: true
+toc: true
 ---
-테스트 글임
+테스트 글임  
 많은 폐쇄망 환경에서 Docker 사용이 제한되거나, Shell Executor 기반의 GitLab Runner를 사용하는 경우가 많습니다. 이럴 때는 Docker 이미지 대신 **TruffleHog 바이너리**를 직접 GitLab Runner 서버에 배치하여 시크릿 스캐닝을 수행할 수 있습니다.
 
 ## 1. 외부망 작업 (Preparation)
