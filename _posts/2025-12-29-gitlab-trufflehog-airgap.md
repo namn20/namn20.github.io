@@ -4,7 +4,7 @@ date: 2025-12-29 11:00:00 +0900
 categories: [Tech-Security]
 tags: [gitlab, trufflehog, air-gapped, security, binary, devsecops]
 pin: false
-math: false
+math: true
 mermaid: true
 toc: true
 ---
