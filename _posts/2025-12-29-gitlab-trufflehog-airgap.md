@@ -14,6 +14,8 @@ toc: true
 ## 1. 외부망 작업 (Preparation)
 
 TruffleHog는 Go 언어로 빌드되어 의존성 없는 단일 실행 파일(Binary)로 제공되나, 룰셋 수정(소스 코드 수정) 시 재빌드가 필요합니다. 폐쇄망 내부에는 `go get`을 위한 인터넷 연결이 없으므로, 외부에서 모든 라이브러리를 하나로 묶는 **벤더링(Vendoring)** 작업을 수행합니다.
+  
+
 > [!WARNING]
 > 룰셋 수정(소스 코드 수정) 시 재빌드가 필요하기 때문에 단일 실행 파일(Binary)로 반입할수 없음
 
@@ -25,7 +27,7 @@ cd trufflehog
 ```
 ### (2) 의존성 패키지 다운로드 (Vendor 처리)
 ```bash
-o mod vendor
+go mod vendor
 
 ```
 
