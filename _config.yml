@@ -3,7 +3,7 @@
 # Import the theme
 theme: jekyll-theme-chirpy
 
-lang: ko
+lang: en
 timezone: Asia/Seoul
 
 title: Pedro
