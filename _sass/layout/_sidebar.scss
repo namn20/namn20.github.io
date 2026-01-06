@@ -16,8 +16,18 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
   height: 100%;
   overflow-y: auto;
   width: v.$sidebar-width;
-  background: var(--sidebar-bg);
-  border-right: 1px solid var(--sidebar-border-color);
+
+
+  /* 글자 가독성을 위한 어두운 오버레이 추가 */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0; left: 0; right: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* 0.4는 어둡기 정도 (0~1) */
+    z-index: -1; /* 내용보다 뒤로 보냄 */
+  }
+  /* --- 수정 부분 끝 --- */
+
 
   /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none; /* IE and Edge */
