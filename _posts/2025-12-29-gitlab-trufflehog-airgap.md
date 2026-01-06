@@ -1,7 +1,7 @@
 ---
 title: 폐쇄망 GitLab 환경에서 TruffleHog 바이너리로 시크릿 스캐닝 구축하기
 date: 2025-12-29 11:00:00 +0900
-categories: [Tech-Security]
+categories: [Tech-Security, TruffleHog]
 tags: [gitlab, trufflehog, air-gapped, security, binary, devsecops]
 pin: false
 math: true
