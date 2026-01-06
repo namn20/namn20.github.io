@@ -1,6 +1,6 @@
 ---
 title: Jekyll Chirpy 테마에 Utterances 댓글 기능 추가하기
-date: 2026-01-06 13:00:00 +0900
+date: 2026-01-06 10:00:00 +0900
 categories: [Blogging, Chirpy]
 tags: [chirpy, utterances, comments, github]
 ---
@@ -21,7 +21,7 @@ Utterances는 댓글을 GitHub 저장소의 이슈로 생성하고 관리합니�
 2.  반드시 **공개(Public)** 저장소로 설정해야 합니다. 비공개(Private) 저장소는 작동하지 않습니다.
 3.  `README.md` 파일을 추가하여 빈 저장소가 아니도록 설정하는 것을 권장합니다.
 
-![New Repo](https://docs.github.com/assets/cb-11133/images/help/repository/repo-create-new-repo-page.png)
+![New Repo](../assets/img/posts/2026-01-06-utterances-integration/1.png)
 
 ---
 
@@ -33,7 +33,7 @@ Utterances는 댓글을 GitHub 저장소의 이슈로 생성하고 관리합니�
 2.  설치 옵션에서 **"Only select repositories"**를 선택하고, 방금 생성한 댓글 전용 저장소(e.g., `my-blog-comments`)를 지정해 줍니다.
 3.  `Install` 버튼을 눌러 설치를 완료합니다.
 
-![Install Utterances](https://user-images.githubusercontent.com/1339022/42726391-73e42c86-872c-11e8-9034-247651239103.png)
+![Install Utterances](../assets/img/posts/2026-01-06-utterances-integration/2.png)
 
 ---
 
@@ -70,7 +70,7 @@ Chirpy 테마는 Utterances를 내장 지원하므로, 복잡한 코드 수정 �
 
 성공적으로 연동되었다면, 아래와 같이 포스트 하단에 GitHub 계정으로 로그인하고 댓글을 작성할 수 있는 창이 나타날 것입니다.
 
-![Utterances Widget](https://user-images.githubusercontent.com/1339022/42726401-79dc2004-872c-11e8-9 utterances-comment-box.png)
+![Utterances Widget](../assets/img/posts/2026-01-06-utterances-integration/3.png)
 
 ## 결론
 
