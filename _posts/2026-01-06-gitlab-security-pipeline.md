@@ -1,6 +1,6 @@
 ---
 title: AI를 활용한 보안 정책 관리 자동화 PoC 가이드
-date: 2026-01-06 00:00:00 +0900
+date: 2026-01-06 12:00:00 +0900
 categories: [DevSecOps, AI]
 tags: [security, ai, gitlab, pipeline]
 ---
