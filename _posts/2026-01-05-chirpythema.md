@@ -18,13 +18,13 @@ render_with_liquid: false
 
 2. Source Clone
 ```bash
-$ git clone https://github.com/namn20/namn20.github.io.git
+git clone https://github.com/namn20/namn20.github.io.git
 ```
 
 3. 초기화 
 - fork로 소스코드를 가져왔기 때문에 테마 자체 개발시 필요한 파일 삭제 
 ```bash
-$ tools/init.sh
+tools/init.sh
 ```
 
 4. ruby Install
@@ -34,20 +34,20 @@ $ tools/init.sh
 
 5. npm Install
 ```bash
-$ npm install && npm run build
+npm install && npm run build
 ```
 
 6. jekyll 실행을 위한 모듈 설치
 - 나의 로컬로 이동하여 bundle install
 ```bash
-$ cd namn20.github.io
-$ bundle install
+cd namn20.github.io
+bundle install
 ```
 
 7. 설치가 완료 후 로컬에서 jekyll 실행
 - 실시간 반영을 위해 서버 실행 실행할때 `--furure` 옵션 추가
 ```bash
-$ bundle exec jekyll serve --future
+bundle exec jekyll serve --future
 ```
 
 8. 웹 브라우저 127.0.0.1:4000 주소로 블로그 정상적으로 표시되는지 확인
@@ -73,9 +73,9 @@ $ bundle exec jekyll serve --future
 3. git 배포를 위해 _post 경로에 테스트용 생성 후 git push
      ![posttest](../assets/img/posts/2026-01-05-chirpythema/testpost.png)
 ```bash
-$ git add -A
-$ git commit -m "chore: first commit"
-$ git push origin main -f
+git add -A
+git commit -m "chore: first commit"
+git push origin main -f
 ```
 - 강제로 한 이유는 tools.init 명령을 통해 버전이 변경되어 (원격이 더 최근 버전으로 인지함)
 
