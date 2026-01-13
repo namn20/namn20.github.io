@@ -172,3 +172,6 @@ comments:
   utterances:
     repo: "namn20/my-blog-comments" # 1단계에서 생성한 댓글 저장소 (e.g., namn20/my-blog-comments)
     issue_term: "pathname" # 포스트와 이슈를 매핑하는 방식
+
+plugins:
+  - jekyll-sitemap
