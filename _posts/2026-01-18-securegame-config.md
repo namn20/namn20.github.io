@@ -1,154 +1,105 @@
 ---
 layout: post
-title:  "Windows 게임 서버 배포 시 config.json 민감 정보 보호 가이드"
+title:  "Windows 게임 서버 Config 보안: 운영팀 및 개발사 가이드"
 date:   2026-01-18
-categories: [DevOps, Security]
-tags: [Windows, GameServer, Security, ACL, EFS]
+categories: [Security, DevOps, Management]
+tags: [SecurityPolicy, Operations, VendorManagement]
 ---
 
-# 🛡️ Windows 게임 서버 배포 시 config.json 민감 정보 보호 가이드
+# 📋 Windows 게임 서버 Config 보안: 운영팀 및 개발사 협업 가이드
 
-게임 퍼블리싱이나 서버 운영을 하다 보면 가장 흔하게 마주치는 보안 이슈가 바로 **설정 파일(`config.json`, `.env`, `xml` 등) 내의 민감 정보 노출** 문제입니다.
+앞선 포스팅에서 기술적인 해결책(ACL, EFS, 환경변수)을 다뤘다면, 이번에는 실제 현업에서 **운영팀(Ops)**과 **외주 개발사(Dev)**에게 어떻게 업무를 지시하고 가이드해야 하는지에 대한 **커뮤니케이션 매뉴얼**을 정리합니다.
 
-Windows Server 환경에서 `gameserver.exe`와 같은 실행 파일 방식의 서버를 배포할 때, DB 접속 정보나 API Key가 포함된 설정 파일을 어떻게 보호해야 할까요?
-
-이 글에서는 **소스 코드 수정이 불가능한 경우(운영 조치)**와 **가능한 경우(개발 조치)**로 나누어 실질적인 해결 방법을 정리했습니다.
-
----
-
-## 🚫 문제 상황
-
-대부분의 게임 서버는 실행 시 `config.json` 파일을 읽어 데이터베이스에 접속하거나 외부 API를 호출합니다.
-
-```json
-// 위험한 config.json 예시
-{
-  "Database": {
-    "Host": "192.168.1.10",
-    "User": "sa",
-    "Password": "MySuperSecretPassword123!" // 🚨 평문 노출 위험!
-  },
-  "ApiKey": "sk_live_1234567890"
-}
-```
-
-이 파일이 평문으로 저장되어 있다면, 서버에 접근할 수 있는 누구든(해커, 악의적인 내부자, 권한이 탈취된 다른 프로세스 등) 이 정보를 볼 수 있게 됩니다.
+기술적인 방법(`How`)보다 중요한 것은 각 담당자가 움직일 수 있는 명분과 기준(`Why & Rule`)을 제시하는 것입니다.
 
 ---
 
-## 🏗️ 1. 소스 코드 수정이 불가능한 경우 (인프라/운영 레벨)
+## 🏗️ 1. 운영팀(Infra/Ops) 가이드
+운영팀은 소스 코드를 수정할 권한이 없는 경우가 많습니다. 따라서 **"지금 돌아가고 있는 서버 환경에서 즉시 적용 가능한 조치"**를 요청해야 합니다.
 
-이미 빌드된 `gameserver.exe`를 배포만 해야 하는 상황이라면 **Windows OS 자체의 보안 기능**을 활용해야 합니다.
+### 🎯 핵심 목표
+*   소스 코드 수정 없이 OS 레벨에서 접근 통제 수행
+*   사고 발생 시 피해 범위 최소화 (해커가 서버에 침투해도 config 파일을 못 읽게)
 
-### A. 안심할 수 있는 첫걸음: 파일 권한(ACL) 제한
+### 📨 전달 메일 템플릿 (예시)
 
-Windows의 NTFS 파일 시스템 권한을 사용하여, 게임 서버를 실행하는 **특정 계정** 외에는 파일을 절대 열어볼 수 없게 막습니다.
+> **제목:** [긴급/보안] 게임 서버 설정 파일(config.json) 접근 권한 강화 조치 요청
+>
+> 안녕하세요, 보안팀입니다.
+> 현재 운영 중인 게임 서버의 설정 파일에 민감 정보(DB PW 등)가 평문으로 저장되어 있어 보안 강화가 시급합니다.
+> 개발사의 패치가 적용되기 전까지, **OS 레벨에서의 접근 통제**를 아래와 같이 요청합니다.
+>
+> **[필수 조치 사항]**
+> 1.  **서비스 계정 분리**: 게임 서버 프로세스는 `Administrator`가 아닌 제한된 권한의 **별도 계정(예: GameSvcUser)**으로 구동해 주십시오.
+> 2.  **파일 권한(ACL) 축소**:
+>     *   `config.json`의 보안 속성에서 `Everyone`, `Users` 그룹을 제거하십시오.
+>     *   오직 `SYSTEM`, `Administrators`, `GameSvcUser`에게만 접근 권한을 부여하십시오.
+>
+> **[확인 방법]**
+> *   일반 계정으로 로그인 후 메모장으로 해당 파일을 열었을 때 **"액세스 거부(Access Denied)"** 메시지가 출력되어야 합니다.
 
-#### 📝 적용 방법 (GUI)
-1. **전용 계정 생성**: 게임 서버 구동을 위한 별도 윈도우 계정(예: `GameSvcUser`)을 생성합니다. (Administrator 권한 부여 X)
-2. `config.json` 파일 우클릭 -> **[속성]** -> **[보안]** 탭 -> **[고급]** 클릭.
-3. **[상속 사용 안 함]** 클릭 -> "상속된 사용 권한을 이 개체에 대한 명시적 사용 권한으로 변환합니다" 선택.
-4. 불필요한 계정(Users, Guest 등)을 모두 **제거**합니다.
-5. **[추가]** -> `GameSvcUser` 선택 -> **"읽기 및 실행"** 권한만 부여합니다.
-6. 결과적으로 `SYSTEM`, `Administrators`, `GameSvcUser` 외에는 접근이 차단됩니다.
-
-#### 💻 적용 방법 (PowerShell 스크립트)
-자동화된 배포를 위해 PowerShell을 사용할 수 있습니다.
-
-```powershell
-# 변수 설정
-$ConfigPath = "C:\GameServer\config.json"
-$ServiceUser = "GameSvcUser"
-
-# 1. 현재 ACL 가져오기
-$Acl = Get-Acl $ConfigPath
-
-# 2. 상속 비활성화 및 기존 권한 제거 준비
-$Acl.SetAccessRuleProtection($true, $false) 
-
-# 3. 새 권한 설정 (서비스 계정에게 ReadAndExecute 권한 부여)
-$Ar = New-Object System.Security.AccessControl.FileSystemAccessRule($ServiceUser, "ReadAndExecute", "Allow")
-$Acl.SetAccessRule($Ar)
-
-# 4. 관리자 권한 유지 (옵션 - 비상시 접근용)
-$AdminAr = New-Object System.Security.AccessControl.FileSystemAccessRule("Administrators", "FullControl", "Allow")
-$Acl.SetAccessRule($AdminAr)
-
-# 5. 권한 적용
-Set-Acl $ConfigPath $Acl
-```
-
-### B. 강력한 보호: Windows EFS (파일 시스템 암호화)
-
-권한 제어만으로는 물리적인 하드 디스크 탈취나 관리자 권한 탈취 시 파일을 보호하기 어렵습니다. **EFS(Encrypting File System)**를 사용하면 파일 자체를 암호화하여 저장할 수 있습니다.
-
-*   **특징**: 암호화한 사용자(`GameSvcUser`)가 로그인했을 때만 OS가 투명하게 복호화해줍니다. 다른 사용자가 파일을 열면 "액세스 거부"가 발생하거나 깨진 데이터로 보입니다.
-
-#### 📝 적용 방법
-1. 게임 서버 실행 계정(`GameSvcUser`)으로 Windows에 로그인합니다.
-2. `config.json` 우클릭 -> **[속성]** -> **[일반]** -> **[고급]**.
-3. **[데이터 보호를 위해 내용을 암호화]** 체크 후 확인.
-4. 이후 해당 파일은 녹색 텍스트로 표시되며 암호화됩니다.
+### ✅ 운영팀 체크리스트
+* [ ] 게임 서버가 `System`이나 `Administrator` 계정이 아닌 전용 계정으로 실행 중인가?
+* [ ] `config.json` 권한 설정에서 불필요한 사용자(Users)가 제거되었는가?
+* [ ] 원격 데스크톱(RDP) 접속 권한이 엄격하게 관리되고 있는가?
 
 ---
 
-## 👨‍💻 2. 소스 코드 수정이 가능한 경우 (개발 레벨)
+## 🤝 2. 외주(게임) 개발사 가이드
+개발사에게는 단순 권고가 아닌 **"납품 기준(Acceptance Criteria)"**으로 접근해야 확실한 처리가 가능합니다.
 
-가장 근본적인 해결책은 설정 파일에 비밀 정보를 남기지 않는 것입니다.
+### 🎯 핵심 목표
+*   소스 코드 및 형상 관리 시스템에서 민감 정보 원천 제거
+*   운영 환경 변화(환경 변수 사용 등)에 유연하게 대응 가능한 구조 마련
 
-### A. 환경 변수 (Environment Variables) 사용 (추천 ⭐)
+### 📨 개발사 전달 공문/가이드 템플릿 (예시)
 
-[The 12-Factor App](https://12factor.net/ko/config) 원칙에 따라, 설정은 코드나 파일이 아닌 **환경(Environment)**에 저장해야 합니다.
+> **제목:** [보안공지] 차기 버전 게임 서버 보안 요구사항 안내
+>
+> 귀사의 노고에 감사드립니다.
+> 당사의 보안 정책 강화에 따라, 향후 납품되는 게임 서버 빌드에 대해 아래와 같은 보안 요구사항을 적용해 주시기를 바랍니다.
+> 해당 사항은 차기 마일스톤 **검수(QA) 시 필수 거부(Blocker) 항목**으로 적용될 예정입니다.
+>
+> **[개발 필수 요구 사항]**
+> 1.  **하드코딩 금지**: 소스 코드 및 Git 저장소에 비밀번호, API Key 등을 절대 포함하지 마십시오.
+> 2.  **구성의 외부화 (Environment Variables 지원)**:
+>     *   설정 파일(`config.json`) 외에 **OS 환경 변수**를 통해서도 설정을 주입받을 수 있도록 로직을 수정하십시오.
+>     *   우선순위: `환경 변수` > `config.json 파일 값`
+> 3.  **배포 템플릿 제공**:
+>     *   배포 패키지에는 실제 비밀번호가 없는 `config.template.json`만 포함하십시오.
+>
+> **[구현 예시 (C#)]**
+> ```csharp
+> public string GetDbPassword() {
+>    // 환경 변수가 있으면 최우선 사용
+>    string envPass = Environment.GetEnvironmentVariable("GAME_DB_PASS");
+>    if (!string.IsNullOrEmpty(envPass)) return envPass;
+>    
+>    // 없으면 파일 설정 사용
+>    return this.Config.DbPassword;
+> }
+> ```
 
-1. `config.json`에서는 비밀번호 필드를 제거하거나 빈 값으로 둡니다.
-2. 서버 실행 스크립트에서 환경 변수를 주입합니다.
-
-#### C# (.NET) 코드 변경 예시
-```csharp
-public class GameConfig {
-    public string DbPassword { get; set; }
-
-    public void LoadConfig() {
-        // 1. 파일에서 읽기
-        var config = ReadJsonFile("config.json");
-        
-        // 2. 환경 변수가 있다면 덮어쓰기 (우선순위 높음)
-        var envPass = Environment.GetEnvironmentVariable("GAME_DB_PASSWORD");
-        if (!string.IsNullOrEmpty(envPass)) {
-            config.DbPassword = envPass;
-        }
-    }
-}
-```
-
-#### 배포 시 실행 방법 (PowerShell)
-```powershell
-$env:GAME_DB_PASSWORD = "SuperSecurePassword123!"
-./gameserver.exe
-```
-> **팁:** CI/CD 도구(GitLab CI, Jenkins, Github Actions)를 사용한다면 배포 파이프라인의 'Secret Variables' 기능을 통해 이 값을 안전하게 주입할 수 있습니다.
-
-### B. 설정 파일 암호화 (AES)
-
-파일을 꼭 사용해야 한다면, 민감한 값만 암호화하여 저장합니다.
-
-1. **배포 전:** 암호화 툴을 이용해 평문 비밀번호를 암호화 문자열로 변환 (예: `AES256("mypassword")` -> `U2Fsd...`)
-2. **저장:** `config.json`에 `U2Fsd...` 문자열 저장.
-3. **실행 시:** 서버 코드가 시작될 때 복호화 로직 수행.
-    *   *주의:* 복호화를 위한 '마스터 키'를 코드에 하드코딩하면 안 됩니다. 마스터 키는 환경 변수나 KMS(Key Management Service)에서 가져오도록 설계해야 합니다.
+### ✅ 개발 납품 검수 리스트
+* [ ] Git 저장소 커밋 히스토리에 실제 운영 DB 패스워드가 포함되어 있는가? (발견 시 **인수 거부**)
+* [ ] `config.json` 파일을 삭제하거나 비워두고, 환경 변수 설정만으로 서버가 정상 구동되는가?
+* [ ] 서버 로그 파일에 DB 접속 정보나 민감한 쿼리 내용이 평문으로 기록되지 않는가?
 
 ---
 
-## 📝 요약 및 체크리스트
+## 👮‍♂️ 3. 보안팀(퍼블리셔)의 역할
+양측에 가이드를 던져놓고 끝나는 것이 아닙니다. 보안팀은 이 프로세스가 실제로 돌아가도록 감시하고 지원해야 합니다.
 
-상황에 맞춰 아래 단계 중 하나를 선택하여 적용하세요.
+1.  **정기 점검**: 운영 서버에 불시 접속하여 파일 권한이 풀려있지 않은지 확인합니다.
+2.  **자동화 도구 지원**: 개발사가 코드를 푸시할 때 사용할 수 있는 시크릿 스캔 도구(Gitleaks 등)를 제공하거나 가이드합니다.
+3.  **Key Vault 구축**: 운영팀이 비밀번호를 포스트잇이나 엑셀에 적어두지 않고, Azure Key Vault 같은 안전한 저장소에서 관리하도록 인프라를 지원합니다.
 
-| 레벨 | 방법 | 추천 상황 | 난이도 | 보안 강도 |
-| :--- | :--- | :--- | :--- | :--- |
-| **Level 1** | **파일 권한 (ACL)** | 코드 수정 불가, 빠른 조치 필요 | 하 | 중 |
-| **Level 2** | **환경 변수 사용** | 코드 수정 가능, 표준화된 배포 환경 | 중 | 상 |
-| **Level 3** | **Secret Manager** | 대규모 서비스, 클라우드 환경 | 상 | 최상 |
+---
 
-**🚀 바로 실천할 수 있는 Action Item:**
-1. 지금 즉시 프로덕션 서버의 `config.json` 권한을 확인하세요. Everyone 권한이 있다면 당장 제거해야 합니다.
-2. 개발팀과 협의하여 다음 업데이트 때는 민감 정보를 환경 변수로 분리하는 것을 일정에 포함시키세요.
+### 결론
+보안은 혼자 하는 것이 아닙니다.
+*   **운영팀**은 "문을 잠그고(ACL)",
+*   **개발사**는 "집 안에 귀중품을 두지 않으며(No Hardcoding)",
+*   **보안팀**은 "감시 카메라(Review & Monitoring)"가 되어야 합니다.
+
+이 3박자가 맞을 때, 게임 서비스의 소중한 정보 자산을 지킬 수 있습니다.
