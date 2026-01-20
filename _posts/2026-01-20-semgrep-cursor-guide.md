@@ -1,111 +1,120 @@
 ---
 layout: post
-title: "Semgrep과 Cursor를 활용한 코드 보안 및 기능 진단 가이드"
+title: "[전문가 칼럼] 차세대 AppSec 아키텍처: Git 기반 Semgrep 파이프라인과 Cursor AI를 활용한 정오탐(False Positive) 판별 전략"
 date: 2026-01-20
-categories: [Security, DevTools, AI]
-tags: [semgrep, cursor, sast, mcp]
+categories: [Security Architecture, DevSecOps, AI]
+tags: [semgrep, cursor, ci-cd, sast, triage]
+author: "Security Architect"
 ---
 
-개발자로서 우리는 항상 "안전한 코드"와 "잘 돌아가는 코드" 두 마리 토끼를 잡아야 합니다. 오늘은 정적 분석 도구인 **Semgrep**과 AI 기반 에디터인 **Cursor**를 활용하여, 소스코르의 보안 취약점을 자동으로 찾아내고 기능적 문제를 진단하는 워크플로우를 소개합니다.
+## 서론: "보안은 속도를 늦추는 걸림돌이 아니다"
 
-나아가, 차세대 AI 도구 연동 표준인 **MCP(Model Context Protocol)**가 이 과정을 어떻게 혁신할 수 있을지도 간단히 언급하겠습니다.
+반갑습니다. 오늘은 현대적인 애플리케이션 보안(AppSec) 아키텍처의 핵심인 **'지속적 검증(Continuous Verification)'** 모델에 대해 논의해보고자 합니다.
 
-## 1. 개요
-
-- **Semgrep (Semantic Grep)**: 빠르고 간편한 정적 분석 도구(SAST)입니다. 단순한 문자열 매칭이 아니라 코드의 구조(AST)를 이해하여 패턴을 검색하므로 오탐이 적고 정확합니다. CLI 환경에서 강력한 성능을 발휘합니다.
-- **Cursor**: VS Code 기반의 AI 네이티브 에디터입니다. GPT-4나 Claude 같은 LLM이 내장되어 있어, 코드 작성뿐만 아니라 수정, 리팩토링, 버그 분석에 탁월합니다.
-
-이 두 도구를 함께 사용하면 **"Semgrep으로 문제를 찾고, Cursor로 문제를 해결(또는 심층 분석)"**하는 강력한 루프를 만들 수 있습니다.
+과거의 보안 검수는 개발이 끝난 후 별도로 수행되는 '병목(Bottleneck)' 구간이었습니다. 하지만 DevOps 시대에 이러한 방식은 더 이상 유효하지 않습니다. 오늘은 코드가 리포지토리에 푸시(Push)되거나 병합(Merge)되는 시점에 **Semgrep**을 통해 자동으로 취약점을 탐지하고, 그 결과를 **Cursor AI**를 통해 심층 분석하여 정오탐(False Positive)을 판별하는, 이른바 **'AI 기반 능동형 보안 파이프라인(AI-Augmented Proactive Security Pipeline)'**을 설계해보도록 하겠습니다.
 
 ---
 
-## 2. Semgrep CLI를 이용한 취약점 진단
+## 1. 아키텍처 개요 (The Architecture)
 
-Semgrep은 CLI(Command Line Interface)에서 실행하는 것이 가장 기본적이고 강력합니다. CI/CD 파이프라인에 넣기도 좋고, 로컬에서 빠르게 돌려보기도 좋습니다.
+우리가 구축할 시스템의 흐름은 다음과 같습니다.
 
-### 2.1 설치
+1.  **Trigger Event**: 개발자가 코드를 작성하여 Git에 `Push` 하거나 `Merge Request (PR)`를 생성합니다.
+2.  **Automated Detection Layer (CI/CD)**: CI 파이프라인이 트리거되며 **Semgrep**이 실행됩니다. 이때 규칙 기반(Rule-based) 엔진이 1차적으로 잠재적 위협을 식별합니다.
+3.  **Triage & Remediation Layer (AI-Assisted)**: 탐지된 결과(Artifact)를 **Cursor** 환경으로 가져와, AI 에이전트와 함께 실제 위협인지 단순 오진단(False Positive)인지 판별하고 조치합니다.
 
-파이썬(Python)이 설치되어 있다면 `pip`로 쉽게 설치할 수 있습니다. (또는 brew, docker 등도 지원)
+이 구조는 보안 도구의 고질적인 문제인 '오탐 피로(Alert Fatigue)'를 AI의 문맥 이해 능력으로 획기적으로 줄이는 데 그 목적이 있습니다.
 
-```bash
-# 설치
-pip install semgrep
+---
 
-# 버전 확인
-semgrep --version
+## 2. 탐지 계층 구현: Git 이벤트와 Semgrep CI 연동
+
+보안 아키텍처에서 가장 중요한 것은 **'가시성(Visibility)'의 시점**입니다. 코드가 머지되기 전에 문제를 발견해야 수정 비용이 최소화됩니다. 이를 'Shift Left' 전략이라 부릅니다.
+
+### Semgrep CI 파이프라인 설계
+
+Github Actions나 GitLab CI와 같은 CI 도구에서 Semgrep은 다음과 같이 구성되어야 합니다. 단순히 실행하는 것을 넘어, 파이프라인을 중단(Block)시킬지 경고(Audit)만 줄지 정책적 결정이 필요합니다.
+
+**CI 설정 예시 (개념적 코드):**
+
+```yaml
+# 보안 검수는 'Push'와 'PR' 단계에서 필수적으로 수행되어야 함
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+
+jobs:
+  semgrep-security-scan:
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - uses: actions/checkout@v3
+      
+      # 1. Semgrep 실행 및 결과를 JSON으로 출력
+      # 단순히 텍스트를 터미널에 뿌리는 것에 그치지 않고, 
+      # 데이터를 구조화(Structured Data)하여 후처리할 수 있어야 함.
+      - name: Run Semgrep
+        run: semgrep scan --config=p/security-audit --json > semgrep-results.json
+        
+      # 2. 결과 리포트를 아티팩트로 저장 (추후 Cursor 분석용)
+      - name: Upload Scan Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: semgrep-report
+          path: semgrep-results.json
 ```
 
-### 2.2 기본 스캔 (Auto Config)
-
-프로젝트 루트 디렉토리에서 아래 명령어를 실행하면, Semgrep 레지스트리에서 추천하는 보안 규칙(Ruleset)을 자동으로 적용하여 스캔합니다.
-
-```bash
-# 현재 디렉토리에 대해 자동 설정으로 스캔
-semgrep scan --config=auto
-```
-
-이 명령어 하나만으로도 SQL Injection, XSS, 하드코딩된 비밀번호 등 일반적인 보안 취약점을 꽤 많이 찾아냅니다.
-
-### 2.3 결과 확인 및 포맷팅
-
-스캔 결과는 터미널에 출력되지만, 파일로 저장해서 보고 싶다면 `--json` 또는 `--text` 옵션을 활용할 수 있습니다.
-
-```bash
-# 결과를 output.txt에 저장
-semgrep scan --config=auto > output.txt
-```
+**교수의 조언 (Professor's Note):**
+> "실무에서는 `p/default` 룰셋만으로는 부족합니다. 조직의 비즈니스 로직에 특화된 **Custom Rule**을 작성하여 적용하는 것이 진정한 의미의 SAST 활용입니다. CLI 단계에서 JSON 출력을 저장해두는 것은 추후 데이터 분석을 위한 필수적인 단계임을 명심하십시오."
 
 ---
 
-## 3. Cursor를 활용한 기능 진단 및 취약점 조치
+## 3. 판별 계층 구현: Cursor를 활용한 AI 정오탐 분석 (Triage)
 
-Semgrep이 "여기에 보안 문제가 있어!"라고 알려준다면, Cursor는 "그게 왜 문제이고, 어떻게 고쳐야 하며, 이 코드가 원래 의도한 기능은 무엇인지"를 알려주는 역할을 합니다.
+자, 이제 파이프라인이 경고를 뱉어냈습니다. 수백 개의 경고 중 진짜 위험한 것은 무엇일까요? 여기서 우리는 **Cursor**라는 강력한 AI 도구를 '보안 분석가(Security Analyst)'의 보조 도구로 활용합니다.
 
-### 3.1 워크플로우 예시
+SAST 도구는 문법적 패턴을 매칭하는 데에는 탁월하지만, **'코드의 의도(Intent)'**나 **'외부 맥락(Context)'**을 이해하는 데에는 한계가 있어 오탐(False Positive)이 필연적으로 발생합니다.
 
-1.  **Cursor에서 터미널 열기**: Cursor 에디터 내의 터미널(Ctrl+`)을 열고 `semgrep scan`을 실행합니다.
-2.  **취약점 발견**: 예를 들어, `requests.get(url, verify=False)` 같은 코드가 발견되었다고 가정합시다.
-3.  **Cursor AI에게 질문하기 (Cmd+K 또는 Chat)**:
-    *   발견된 코드 블럭을 드래그합니다.
-    *   `Cmd+K`를 누르고 질문합니다.
-    *   *"Semgrep에서 여기서 SSL 검증을 비활성화했다고 경고가 떴어. 이걸 안전하게 고치려면 어떻게 해야 해? 그리고 이 코드가 하는 역할이 정확히 뭐야?"*
+### 워크플로우: AI 기반 정오탐 판별 프로세스
 
-### 3.2 기능 진단 (Functional Diagnosis)
+1.  **Artifact 로드**: CI에서 생성된 `semgrep-results.json` 파일을 Cursor 프로젝트 루트에 배치합니다.
+2.  **Context 주입**: Cursor의 Chat 기능(또는 Composer)을 열고, Semgrep 결과 파일과 소스 코드를 동시에 참조시킵니다.
+3.  **AI 질의 (Prompt Engineering)**:
 
-보안 문제 외에도, 코드가 의도대로 동작하는지 검증하는 데 Cursor가 유용합니다.
+    > **전문가 프롬프트 예시:**
+    >
+    > "지금 `semgrep-results.json`에서 ID `vuln-1`로 탐지된 SQL Injection 취약점을 봐주게.
+    > 관련된 소스 코드 파일(`user_dao.py`)을 분석해서, 실제로 입력값 검증이 누락되어 공격 가능한 상태인지(True Positive),
+    > 아니면 상위 함수에서 이미 Sanitization을 수행하고 있어 안전한 상태인지(False Positive) 논리적으로 판단해서 설명해주게."
 
-*   **로직 설명 요청**: *"이 함수가 데이터베이스 트랜잭션을 처리하는 로직이 올바른지 설명해줘. 예외 처리가 빠진 부분은 없어?"*
-*   **테스트 케이스 생성**: *"이 비즈니스 로직을 검증하기 위한 단위 테스트 코드를 작성해줘."*
+### 정오탐 판별 기준 (Evaluation Criteria)
 
-Semgrep이 **구조적/패턴적 오류**를 잡는다면, Cursor는 **맥락적/논리적 오류**를 잡는 데 탁월합니다.
+보안 아키텍트로서 판별 시 다음 세 가지를 AI에게 확인시켜야 합니다.
 
----
+1.  **도달 가능성 (Reachability)**: 외부의 사용자 입력(Untrusted Input)이 해당 취약 코드까지 실제로 도달할 수 있는가?
+2.  **완화 조치 유무 (Mitigation)**: 프레임워크 레벨이나 미들웨어에서 이미 방어 로직이 적용되어 있는가?
+3.  **영향도 (Impact)**: 해당 취약점이 악용되었을 때 실제로 비즈니스에 영향이 있는가?
 
-## 4. MCP (Model Context Protocol) 란 무엇인가?
-
-글을 마치기 전, 질문 주신 **MCP**에 대해 간단히 짚고 넘어가겠습니다.
-
-지금 우리는 **Terminal(Semgrep) -> Copy/Paste -> Cursor AI**의 과정을 거치고 있습니다. 사람이 중간에서 도구 결과를 AI에게 전달해줘야 하죠.
-
-**MCP (Model Context Protocol)**는 Anthropic이 제안한 개방형 표준으로, **AI 모델이 외부 데이터나 도구(Tool)에 직접 안전하게 접근할 수 있도록 하는 규약**입니다.
-
-### MCP가 적용된 미래의 워크플로우
-
-만약 Semgrep이 MCP 서버로 구현되어 있고, Cursor(또는 다른 AI 에이전트)가 MCP 클라이언트로 연결된다면 어떻게 될까요?
-
-1.  사용자가 AI에게 *"이 프로젝트 보안 점검해줘"* 라고 말합니다.
-2.  **AI가 직접 Semgrep 도구를 호출**하여 스캔을 수행합니다. (사람이 명령어를 칠 필요 없음)
-3.  스캔 결과를 AI가 **직접 읽어들여** 분석합니다.
-4.  AI가 취약점이 발견된 파일을 **직접 열어서 수정 제안**을 합니다.
-
-즉, **"도구의 실행 결과"를 AI가 문맥(Context)으로 바로 이해**하게 해주는 연결 고리가 바로 MCP입니다. 추후 여러분의 보안 진단 시스템을 자동화할 때, MCP 서버를 구축해두면 어떤 AI 모델이든 쉽게 붙여서 진단을 수행하게 만들 수 있을 것입니다.
+Cursor AI는 전체 프로젝트의 파일 간 참조 관계를 파악할 수 있으므로, 단순 스크립트보다 훨씬 정확하게 "이 변수는 `Filter()` 함수를 거쳐 왔으므로 안전합니다"와 같은 추론을 내릴 수 있습니다.
 
 ---
 
-## 마무리
+## 4. MCP(Model Context Protocol)를 통한 미래의 보안 관제
 
-*   1차 필터링: **Semgrep CLI**로 빠르고 확실한 패턴 매칭 보안 진단
-*   2차 분석 및 수정: **Cursor**로 문맥 기반 상세 분석 및 코드 수정
-*   미래 확장: **MCP**를 도입하여 이 과정을 완전 자동화된 에이전트 워크플로우로 발전
+현재는 개발자가 수동으로 JSON을 옮겨서 질문해야 하지만, 여러분이 질문했던 **MCP**가 도입되면 이 과정은 아키텍처적으로 완전히 통합됩니다.
 
-이 글이 여러분의 안전하고 똑똑한 코딩 생활에 도움이 되기를 바랍니다!
+*   **As-Is**: CI 결과 다운로드 -> Cursor에 업로드 -> 질의
+*   **To-Be (with MCP)**: Cursor가 MCP 프로토콜을 통해 사내 CI 서버나 SonarQube, DefectDojo 같은 취약점 관리 시스템에 **직접 접속**.
+    *   AI가 *"최근 빌드에서 실패한 보안 항목 가져와"* 라고 명령하면, MCP 서버가 Semgrep 리포트를 반환하고, AI가 즉시 에디터에서 해당 코드 라인을 띄우며 *"이 부분은 오탐이므로 예외 처리하겠습니다"*라고 제안하는 구조가 됩니다.
+
+---
+
+## 결론 (Conclusion)
+
+보안은 도구를 많이 깐다고 강화되는 것이 아닙니다. **탐지된 위협을 얼마나 빠르고 정확하게 소화(Digest)하느냐**가 핵심입니다.
+
+Git 이벤트 기반의 **Semgrep** 자동화가 '빈틈없는 감시자'라면, **Cursor**는 그 감시 결과를 해석하는 '지혜로운 조언자'입니다. 이 두 축을 결합하여 오탐에 허덕이는 보안 팀이 아니라, 비즈니스 로직의 결함을 꿰뚫어 보는 **Security Architect**의 관점을 가지시길 바랍니다.
+
+
