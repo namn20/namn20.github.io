@@ -11,7 +11,7 @@ author: "Security Architect"
 
 반갑습니다. 오늘은 현대적인 애플리케이션 보안(AppSec) 아키텍처의 핵심인 **'지속적 검증(Continuous Verification)'** 모델에 대해 논의해보고자 합니다.
 
-과거의 보안 검수는 개발이 끝난 후 별도로 수행되는 '병목(Bottleneck)' 구간이었습니다. 하지만 DevOps 시대에 이러한 방식은 더 이상 유효하지 않습니다. 오늘은 코드가 리포지토리에 푸시(Push)되거나 병합(Merge)되는 시점에 **Semgrep**을 통해 자동으로 취약점을 탐지하고, 그 결과를 **Cursor AI**를 통해 심층 분석하여 정오탐(False Positive)을 판별하는, 이른바 **'AI 기반 능동형 보안 파이프라인(AI-Augmented Proactive Security Pipeline)'**을 설계해보도록 하겠습니다.
+ 과거의 보안 검수는 개발이 끝난 후 별도로 수행되는 '병목(Bottleneck)' 구간이었습니다. 하지만 DevOps 시대에 이러한 방식은 더 이상 유효하지 않습니다. 오늘은 코드가 리포지토리에 푸시(Push)되거나 병합(Merge)되는 시점에 **Semgrep**을 통해 자동으로 취약점을 탐지하고, 그 결과를 **Cursor AI**를 통해 심층 분석하여 정오탐(False Positive)을 판별하는, 이른바 **'AI 기반 능동형 보안 파이프라인(AI-Augmented Proactive Security Pipeline)'**을 설계해보도록 하겠습니다.
 
 ---
 
