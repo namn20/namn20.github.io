@@ -2,7 +2,7 @@
 layout: post
 title:  "Windows 게임 서버 Config 보안: 운영팀 및 개발사 가이드"
 date:   2026-01-18
-categories: [Security, DevOps, Management]
+categories: [Security, Infrastructure]
 tags: [SecurityPolicy, Operations, VendorManagement]
 ---
 
