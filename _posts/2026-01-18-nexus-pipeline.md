@@ -2,7 +2,7 @@
 layout: post
 title: "GitLab CI에 Nexus IQ Server 연동 및 Threat Level 10 차단 정책 설정하기"
 date: 2026-01-18
-categories: [DevOps, Security]
+categories: [Security, AppSec]
 tags: [gitlab, ci/cd, nexus, sonatype, security, pipeline]
 ---
 
