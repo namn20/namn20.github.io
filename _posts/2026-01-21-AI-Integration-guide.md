@@ -2,12 +2,13 @@
 layout: post
 title: "AI 정오탐 자동 분석 연동 가이드"
 date: 2026-01-21
-categories: [AI Security, Automation]
-tags: [AI, LLM, FalsePositive, Guide]
+categories: [AI & Security, Automation] # 카테고리 설정
+tags: [LLM, Security, AI-Agent, False-Positive] # 태그 설정
+render_with_liquid: false
 ---
-# 🤖 AI 정오탐 자동 분석 연동 가이드
 
-> Semgrep 스캔 결과를 AI로 자동 분석하여 정탐(True Positive)만 필터링하는 방법
+> **보안의 한계를 AI로 넘다** > 본 포스팅은 LLM과 AI 에이전트를 활용하여 반복적인 보안 정책 관리를 자동화하고, 
+> 특히 정적 분석 시스템에서 발생하는 정오탐(False Positive) 분석의 효율을 극대화하는 실무 기술을 다룹니다.
 
 ---
 
