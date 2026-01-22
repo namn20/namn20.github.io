@@ -1,8 +1,8 @@
 ---
 title: "SecOps: GitLab 소스코드 정적 분석 시스템 개발기"
 date: 2026-01-22
-categories: [DevSecOps, Security]
-tags: [gitlab, semgrep, bandit, sast, python, security, automation]
+categories: [AI Security, Automation]
+tags: [AI, LLM, FalsePositive, Guide]
 author: jnyoon
 toc: true
 toc_sticky: true
