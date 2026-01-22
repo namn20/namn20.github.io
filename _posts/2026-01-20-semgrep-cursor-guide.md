@@ -2,7 +2,7 @@
 layout: post
 title: "[전문가 칼럼] 차세대 AppSec 아키텍처: Git 기반 Semgrep 파이프라인과 Cursor AI를 활용한 정오탐(False Positive) 판별 전략"
 date: 2026-01-20
-categories: [Security Architecture, DevSecOps, AI]
+categories: [AI & Automation, Security AI]
 tags: [semgrep, cursor, ci-cd, sast, triage]
 author: "Security Architect"
 ---
