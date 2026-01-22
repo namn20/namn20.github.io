@@ -1,7 +1,7 @@
 ---
 title: "SecOps: GitLab 소스코드 정적 분석 시스템 개발기"
 date: 2026-01-22
-categories: [AI Security, Automation]
+categories: [Security, AppSec]
 tags: [AI, LLM, FalsePositive, Guide]
 author: jnyoon
 toc: true
