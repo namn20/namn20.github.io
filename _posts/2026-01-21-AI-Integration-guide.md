@@ -2,7 +2,8 @@
 layout: post
 title: "AI 정오탐 자동 분석 연동 가이드"
 date: 2026-01-21
-categories: [ai, semgrep, security, automation]
+categories: [AI Security, Automation]
+tags: [AI, LLM, FalsePositive, Guide]
 ---
 # 🤖 AI 정오탐 자동 분석 연동 가이드
 
