@@ -2,8 +2,8 @@
 title: Chirpy 테마로 블로그 시작하기
 author: pedro
 date: 2026-01-05 10:10:00 +0900
-categories: [Blogging, Chirpy]
-tags: [writing]
+categories: [Blog, Chirpy]
+tags: [writing, Chirpy]
 render_with_liquid: false
 ---
 
