@@ -2,7 +2,7 @@
 layout: post
 title: "AI(Cursor, Gemini)로 가속화하는 스팀 게임 보안 취약점 진단 가이드"
 date: 2026-01-20
-categories: [Game Security, AI, DevLog]
+categories: [Security, Management]
 tags: [Steam, Unreal Engine 5, Security, Cursor, Gemini, Python, Red Teaming]
 description: "스팀(Steam)과 언리얼 엔진 5 환경에서 AI 도구를 활용하여 게임 클라이언트의 변조, 로직 우회, 에셋 유출 가능성을 진단하는 자동화된 보안 워크플로우와 실전 체크리스트를 소개합니다."
 ---
