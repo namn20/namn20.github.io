@@ -20,34 +20,33 @@ tags: [python, vibe, LLM, security, pentest]
 ## 🚀 주요 기능
 
 이 시스템은 크게 4가지 핵심 모듈로 구성되어 있습니다.
-
-### 1. 검토 요청 (Request)
-     ![main](../assets/img/posts/2026-01-26-securityprocess/1.png)
-     ![main](../assets/img/posts/2026-01-26-securityprocess/2.png)
+###  1. 검토 요청 (Request)
 사용자(개발자/담당자)가 서비스의 기본 정보를 입력하는 단계입니다.
-*   **서비스 유형 선택:** 결제, 인증, 개인정보, 외부연동 등 다중 선택 가능
-*   **리스크 자동 산정:** 선택한 서비스 유형과 비즈니스 영향도(금전, 평판 등)를 가중치로 계산하여 Risk Score와 Level(Critical ~ Low)을 도출
 
+1.1 예제1)
+    ![검토 요청](../assets/img/posts/2026-01-26-securityprocess/1.png)
+1.2 예제2)
+    ![검통 요청](../assets/img/posts/2026-01-26-securityprocess/2.png)
 ### 2. 검토 관리 (Review)
-     ![main](../assets/img/posts/2026-01-26-securityprocess/3.png)
 보안 담당자가 접수된 요청을 확인하고 관리하는 단계입니다.
+    ![검토 관리](../assets/img/posts/2026-01-26-securityprocess/3.png)
 *   서비스 유형에 따라 중점적으로 봐야 할 **'집중 점검 가이드'** 제공
 *   진단 진행 여부 판단 및 상태 관리 (진행 중, 조치 대기, 완료 등)
 
 ### 3. 진단 수행 (Diagnosis)
-     ![main](../assets/img/posts/2026-01-26-securityprocess/4.png)
 실제 보안성 검토를 수행하는 단계로, 정보 흐름(Flow)에 따른 체크포인트가 자동 생성됩니다.
+    ![진단 수행](../assets/img/posts/2026-01-26-securityprocess/4.png)
 *   **Flow:** Client → Network → Gateway → Application → Data
 *   영역별 체크포인트에 대해 Pass/Fail/N/A 판정 및 결과 기록
 
 ### 4. 대시보드 (Dashboard)
-     ![main](../assets/img/posts/2026-01-26-securityprocess/5.png)
 전체 진행 상황을 한눈에 볼 수 있습니다.
+    ![대시 보드](../assets/img/posts/2026-01-26-securityprocess/5.png)
 *   리스크 등급별 현황
 *   진행 상태별 통계
 *   최근 요청 목록
 
-## � 보안 아키텍처 관점 (Security Architecture Perspective)
+##  보안 아키텍처 관점 (Security Architecture Perspective)
 
 이 시스템은 단순한 도구 도입을 넘어, 전사적 보안 아키텍처 관점에서 **'보안성 검토의 집중화(Centralized Security Review)'**를 지향합니다.
 
@@ -55,7 +54,7 @@ tags: [python, vibe, LLM, security, pentest]
 *   **일관된 정책 적용:** 서비스 유형(Service Types)별로 정의된 보안 정책이 시스템에 내재화되어 있어, 검토자의 개인차 없이 일관된 보안 기준을 적용할 수 있습니다.
 *   **데이터 기반의 보안 강화:** 축적된 검토 결과 데이터는 추후 취약점이 빈번한 영역을 파악하고, 보안 가이드나 교육이 필요한 부분을 식별하는 중요한 자산이 됩니다.
 
-## �💻 기술 스택 (Tech Stack)
+## 💻 기술 스택 (Tech Stack)
 
 가볍고 빠른 실행을 위해 Python 기반의 경량화된 스택을 사용했습니다.
 
@@ -80,4 +79,3 @@ securityprocess/
 ## 🏁 마치며
 
 이 시스템은 단순히 체크리스트를 디지털화한 것을 넘어, **'서비스 유형에 따른 유연한 대응'**이 가능하도록 설계되었습니다. 향후에는 Jira/Slack 연동 기능을 추가하여 업무 협업 도구와의 통합을 강화할 계획입니다.
-
