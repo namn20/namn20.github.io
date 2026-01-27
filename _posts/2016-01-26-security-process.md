@@ -1,6 +1,6 @@
 ---
 title: "보안성 검토 워크플로우 시스템 구축 프로젝트"
-date: 2026-01-27
+date: 2026-01-26 11:00:00 +0900
 categories: [Security, Management]
 tags: [python, vibe, LLM, security, pentest]
 ---
