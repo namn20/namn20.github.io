@@ -63,7 +63,7 @@ go build -mod=vendor -o trufflehog main.go
     * **Token name:** `trufflehog-token` (용도에 맞는 이름)
     * **Expiration date:** 만료일 설정 (필요 시 비워둠)
     * **Scopes:** `read_repository`, `api` (스캔 용도라면 이 두 가지 권한이면 충분합니다)
-5.  **Create personal access token 클릭:** 생성된 토큰 값을 **반드시 따로 복사**해두세요. (한 번만 노출됩니다.)
+5.  **Create personal access token 클릭:** 생성된 토큰값을 **반드시 따로 복사**해두세요. (한 번만 노출됩니다.)
 ---
 
 ### (7) Trufflehog CLI 실행 (폐쇄망)
