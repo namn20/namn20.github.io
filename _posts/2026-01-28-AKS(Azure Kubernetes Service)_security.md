@@ -1,11 +1,11 @@
 ---
-title: 컨테이너(AKS) 환경의 취약점, 어떻게 진단해야 할까?
+title: "컨테이너(AKS) 환경의 취약점, 어떻게 진단해야 할까?"
 date: 2026-01-28 11:30:00 +0900
 categories: [Security, DevSecOps]
 tags: [kubernetes, aks, container, security, trivy, falco, devsecops]
-toc: true
-comments: true
 ---
+
+
 
 클라우드 네이티브 시대의 중심에는 컨테이너 기술이 있습니다. 하지만 기존의 가상머신(VM) 환경에서 사용하던 보안 점검 방식은 더 이상 컨테이너 환경에 유효하지 않습니다. 서버에 접속해서 스크립트를 실행하던 방식으로는 복잡하고 동적인 컨테이너 생태계의 보안을 책임질 수 없습니다.
 
