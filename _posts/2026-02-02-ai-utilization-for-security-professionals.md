@@ -1,7 +1,7 @@
 ---
 title: "모의해킹 전문가를 위한 AI 활용 역량 극대화 3단계 가이드"
-date: 2026-02-03 10:00:00 +0900
-categories: [Security, AI]
+date: 2026-02-02 10:00:00 +0900
+categories: [AI & Automation, Security AI] # 카테고리 설정
 tags: [ai, llm, automation, security, productivity, pentesting, infrastructure]
 ---
 
