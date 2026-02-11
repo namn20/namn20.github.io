@@ -1,6 +1,6 @@
 ---
 title: "Azure PaaS DB 취약점 진단: Redis, PostgreSQL, MySQL 200대 스크립트 기반 체크리스트"
-date: 2026-02-12 09:00:00 +0900
+date: 2026-02-12 08:00:00 
 categories: [Security, Cloud]
 tags: [azure, paas, redis, postgresql, mysql, vulnerability-assessment, isms, iso27001]
 ---
