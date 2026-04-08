@@ -312,6 +312,81 @@ PentAGI는 침투테스트의 반복적이고 시간 소모적인 정보 수집 
 
 ---
 
+
+
+## 설치 문서 공유
+
+# PentAGI Mac(Colima) 맞춤 설치 가이드 및 아키텍처
+
+본 문서는 현재 시스템에 실제로 수행되었던 맞춤형 PentAGI 설치 과정과 아키텍처 변경점을 기록한 가이드입니다. 
+
+일반적인 공식 설치 문서는 현재 열려 있는 `README.md`의 **[## Architecture]** 와 **[## Quick Start]** 부분에 정의되어 있으나, 현재 사용자님의 환경(Docker Desktop 사용 불가 방침, 사내망 인증서 가로채기 환경)에 걸맞게 커스터마이징된 내용은 다음과 같습니다.
+
+---
+
+## 1. 실제 구동된 아키텍처 (Modified Architecture)
+
+공식 아키텍처는 여러 모니터링 모듈이 포함되지만 이번 로컬 환경 구성을 위해 필수 핵심 모듈만 남기고 아키텍처를 슬림화했습니다.
+
+### 1-1. 코어 컨테이너 구성
+*   **PentAGI (Main Application)**
+    *   사용자의 요청을 받아 LLM(대규모 언어 모델)과 통신하고 AI 펜테스터를 가동하는 메인 백엔드 서버입니다.
+*   **PGVector (Database)**
+    *   과거 진단 이력, 프롬프트 히스토리 등을 벡터 형태로 기록하고 조회하기 위한 메인 저장소입니다. 기본 `postgres` 이미지가 아닌 벡터 검색 확장(pgvector)이 포함된 이미지(`vxcontrol/pgvector`)를 사용합니다.
+*   **Scraper (Web Crawler)**
+    *   AI가 필요할 때마다 외부 인터넷이나 타겟 웹을 안전하게 렌더링하고 가져올 수 있게 해주는 격리된 크롤링 엔진입니다. (`vxcontrol/scraper`)
+
+### 1-2. 제거된 모듈 (우회 구성)
+*   **Postgres-Exporter (`quay.io/...`)**
+    *   내부 DB 모니터링을 위해 작동하는 부가 기능입니다. `quay.io` 레지스트리를 통한 다운로드 시 사내망 TLS 인증서 가로채기(SSL Inspection)로 인해 `x509` 에러가 발생하여 `docker-compose.yml` 에서 제거되었습니다.
+
+---
+
+## 2. 실제 수행된 설치 방법 (Custom Execution Log)
+
+방금 어시스턴트를 통해 순차적으로 실행된 핵심 설치 단계입니다.
+
+### 2-1. 코드 초기화
+빈 폴더로 남아있던 파일들을 공식 GitHub 저장소에서 정상적으로 모두 가져와 작업 디렉토리를 복구했습니다.
+```bash
+git reset --hard && git pull origin main
+```
+
+### 2-2. Colima(Docker 데몬) 시작 및 연결
+Docker Desktop이 금지된 환경이므로 대체재인 Colima를 가동했습니다.
+```bash
+colima start
+```
+
+### 2-3. 환경 변수(.env) 설정 및 소켓 경로 수정
+Colima가 생성한 도커 소켓 경로를 컨테이너가 정상적으로 바라볼 수 있도록 파일 수정 작업을 거쳤습니다.
+1. `.env.example`을 복사하여 `.env` 생성
+2. `.env` 파일 내부의 주석문이 Docker Compose 파싱 과정에서 충돌을 일으키지 않도록 `perl` 명령어로 모든 내부 주석을 제거.
+3. `.env` 내부에 Colima 소켓을 입력: `PENTAGI_DOCKER_SOCKET=/Users/wm-it-25-0177/.colima/default/docker.sock`
+
+### 2-4. 호스트 경로 충돌 해결 (`docker-compose.yml`)
+`docker-compose.yml` 환경변수 세팅에서 외부 터미널의 환경변수가 로컬 호스트 경로로 치환되어 문제를 일으키는 것을 막기 위해, `DOCKER_HOST`를 내부 고정값으로 강제매핑했습니다.
+```yaml
+# 수정 전
+- DOCKER_HOST=${DOCKER_HOST:-unix:///var/run/docker.sock}
+# 수정 후
+- DOCKER_HOST=unix:///var/run/docker.sock
+```
+
+### 2-5. 사내망 인증서 충돌 모듈 제거
+DB 모니터링 모듈이 사내망 방화벽 문제로 에러를 내뿜자 `docker-compose.yml`에서 `pgexporter` 서비스 정의 부분을 통째로 지웠습니다.
+
+### 2-6. 서비스 실행 및 찌꺼기 제거
+`.env` 파일에 섞여있던 주석 문자로 인해 생성되었던 잘못된 로컬 DB 볼륨을 삭제하고 초기 실행했습니다.
+```bash
+docker-compose down
+docker volume rm pentagi_pentagi-postgres-data
+docker-compose up -d
+```
+이후 3개의 메인 코어 서비스가 포트 `8443` 으로 문제없이 기동되었습니다.
+
+---
+
 **참고 링크**
 - [PentAGI GitHub](https://github.com/vxcontrol/pentagi)
 - [Colima GitHub](https://github.com/abiosoft/colima)
