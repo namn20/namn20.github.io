@@ -699,6 +699,7 @@ python3 << 'EOF'
 import json
 import re
 
+{% raw %}
 with open('results/prowler-aws-scan-report.json', 'r') as f:
     findings = json.load(f)
 
@@ -714,6 +715,7 @@ for finding in findings:
 
 with open('prowler-metrics.txt', 'w') as f:
     f.write('\n'.join(metrics))
+{% endraw %}
 EOF
 
 # 3. Prometheus Node Exporter로 노출
