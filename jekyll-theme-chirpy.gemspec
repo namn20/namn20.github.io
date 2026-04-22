@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+# encoding: UTF-8
 
 Gem::Specification.new do |spec|
   spec.name          = "jekyll-theme-chirpy"

@@ -1,7 +1,7 @@
 # The Site Configuration
 
-# Import the theme
-theme: jekyll-theme-chirpy
+# Encoding
+encoding: utf-8
 
 # Change the following value to '/PROJECT_NAME' ONLY IF your site type is GitHub Pages Project sites
 # and doesn't have a custom domain.
@@ -161,11 +161,11 @@ exclude:
 jekyll-archives:
   enabled: [categories, tags]
   layouts:
-    category: category
+    category: tag
     tag: tag
   permalinks:
-    tag: /tags/:name/
-    category: /categories/:name/
+    tag: /blog/tag/:name/
+    category: /blog/category/:name/
 
 comments:
   provider: "utterances" # 댓글 기능으로 Utterances를 사용하도록 지정
@@ -175,3 +175,7 @@ comments:
 
 plugins:
   - jekyll-sitemap
+  - jekyll-archives
+  - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-feed
