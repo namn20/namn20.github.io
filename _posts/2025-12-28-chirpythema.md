@@ -51,7 +51,7 @@ bundle exec jekyll serve --future
 
 8. 웹 브라우저 127.0.0.1:4000 주소로 블로그 정상적으로 표시되는지 확인
 - 블로그 내 여러 메뉴 및 기능들도 정상 동작하는지 확인
-    ![초기 접속](../assets/img/posts/2026-01-05-chirpythema/처음접속.png)
+    ![초기 접속](/assets/img/posts/2026-01-05-chirpythema/처음접속.png)
 
 
 ## 2. Github Deploy
@@ -60,7 +60,7 @@ bundle exec jekyll serve --future
 
 1. Branch를 Master에서 Main으로 변경 
 - Setting -> General -> Defaut branch : `main`
-     ![main](../assets/img/posts/2026-01-05-chirpythema/main.png)
+     ![main](/assets/img/posts/2026-01-05-chirpythema/main.png)
 
 2. 배포 변경 
 - Settings -> Code and authomation -> Pages 
@@ -70,7 +70,7 @@ bundle exec jekyll serve --future
 - `jekyll.yml 이 배포 설정 파일`
 
 3. git 배포를 위해 _post 경로에 테스트용 생성 후 git push
-     ![posttest](../assets/img/posts/2026-01-05-chirpythema/testpost.png)
+     ![posttest](/assets/img/posts/2026-01-05-chirpythema/testpost.png)
 ```bash
 git add -A
 git commit -m "chore: first commit"
@@ -80,4 +80,4 @@ git push origin main -f
 
 4. 블로그 확인
 -  [제 블로그](https://namn20.github.io/) 접속 성공적으로 반영됨을 확인
-   -     ![blog](../assets/img/posts/2026-01-05-chirpythema/blog.png)
+   -     ![blog](/assets/img/posts/2026-01-05-chirpythema/blog.png)

@@ -24,24 +24,24 @@ tags: [python, vibe, LLM, security, pentest]
 사용자(개발자/담당자)가 서비스의 기본 정보를 입력하는 단계입니다.
 
 1.1 예제1)
-    ![검토 요청](../assets/img/posts/2026-01-26-securityprocess/1.png)
+    ![검토 요청](/assets/img/posts/2026-01-26-securityprocess/1.png)
 1.2 예제2)
-    ![검통 요청](../assets/img/posts/2026-01-26-securityprocess/2.png)
+    ![검통 요청](/assets/img/posts/2026-01-26-securityprocess/2.png)
 ### 2. 검토 관리 (Review)
 보안 담당자가 접수된 요청을 확인하고 관리하는 단계입니다.
-    ![검토 관리](../assets/img/posts/2026-01-26-securityprocess/3.png)
+    ![검토 관리](/assets/img/posts/2026-01-26-securityprocess/3.png)
 *   서비스 유형에 따라 중점적으로 봐야 할 **'집중 점검 가이드'** 제공
 *   진단 진행 여부 판단 및 상태 관리 (진행 중, 조치 대기, 완료 등)
 
 ### 3. 진단 수행 (Diagnosis)
 실제 보안성 검토를 수행하는 단계로, 정보 흐름(Flow)에 따른 체크포인트가 자동 생성됩니다.
-    ![진단 수행](../assets/img/posts/2026-01-26-securityprocess/4.png)
+    ![진단 수행](/assets/img/posts/2026-01-26-securityprocess/4.png)
 *   **Flow:** Client → Network → Gateway → Application → Data
 *   영역별 체크포인트에 대해 Pass/Fail/N/A 판정 및 결과 기록
 
 ### 4. 대시보드 (Dashboard)
 전체 진행 상황을 한눈에 볼 수 있습니다.
-    ![대시 보드](../assets/img/posts/2026-01-26-securityprocess/5.png)
+    ![대시 보드](/assets/img/posts/2026-01-26-securityprocess/5.png)
 *   리스크 등급별 현황
 *   진행 상태별 통계
 *   최근 요청 목록
