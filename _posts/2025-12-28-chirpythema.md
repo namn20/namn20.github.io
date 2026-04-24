@@ -51,7 +51,7 @@ bundle exec jekyll serve --future
 
 8. 웹 브라우저 127.0.0.1:4000 주소로 블로그 정상적으로 표시되는지 확인
 - 블로그 내 여러 메뉴 및 기능들도 정상 동작하는지 확인
-    ![초기 접속](/assets/img/posts/2026-01-05-chirpythema/처음접속.png)
+    ![초기 접속](/assets/img/posts/2026-01-05-chirpythema/first-access.png)
 
 
 ## 2. Github Deploy
