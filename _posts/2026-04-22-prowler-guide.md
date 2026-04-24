@@ -699,7 +699,6 @@ python3 << 'EOF'
 import json
 import re
 
-{% raw %}
 with open('results/prowler-aws-scan-report.json', 'r') as f:
     findings = json.load(f)
 
@@ -710,12 +709,11 @@ for finding in findings:
     result = 1 if finding['Result']['Result'] == 'PASSED' else 0
     severity = finding.get('Severity', 'Unknown')
 
-    metric = f'prowler_check{{check_id="{check_id}",severity="{severity}"}} {result}'
+    metric = 'prowler_check{check_id="%s",severity="%s"} %s' % (check_id, severity, result)
     metrics.append(metric)
 
 with open('prowler-metrics.txt', 'w') as f:
     f.write('\n'.join(metrics))
-{% endraw %}
 EOF
 
 # 3. Prometheus Node Exporter로 노출
