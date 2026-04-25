@@ -1,9 +1,10 @@
----
+﻿---
 layout: post
 title: "[보안 가이드] Burp Suite + Gemini CLI 연동: AI 기반 취약점 분석 환경 구축 완벽 가이드"
 date: 2026-03-05
-categories: [Security, PenTest]
-tags: [burpsuite, gemini, ai, pentest, vulnerability, mcp]
+categories: [Security, Penetration Testing]
+categories: [Security, Penetration Testing]
+tags: [burp, gemini, pentest, dast]
 ---
 
 Burp Suite의 강력한 웹 프록시 기능과 Google Gemini의 AI 분석 능력을 결합하면, 반복적인 취약점 분석 작업을 자동화하고 펜테스터의 생산성을 크게 높일 수 있습니다. 본 포스팅에서는 **실제 Burp Suite 메뉴 경로 및 클릭 순서**를 중심으로 두 도구의 연동 방법을 상세하게 안내합니다.

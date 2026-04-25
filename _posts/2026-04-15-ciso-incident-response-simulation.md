@@ -1,9 +1,10 @@
----
+﻿---
 layout: post
 title: "초보 CISO를 위한 침해사고 대응 가이드 및 실전 시뮬레이션 4선"
 date: 2026-04-15
 categories: [Security, Incident Response]
-tags: [ciso, 보안팀장, 침해사고, 사고대응, incident-response, 시뮬레이션, 랜섬웨어, 크리덴셜스터핑, 공급망공격]
+categories: [Security, Incident Response]
+tags: [ciso, incident-response, security]
 ---
 
 침해사고가 발생했을 때 CISO(정보보호최고책임자) 또는 보안팀장이 감당해야 할 압박감은 엄청납니다. 특히 처음 겪으신다면 당황하기 쉽지만, **CISO의 최우선 역할은 '직접 해커를 잡는 것'이 아니라 '피해를 최소화하고 조직을 지휘(컨트롤 타워)하는 것'**입니다.

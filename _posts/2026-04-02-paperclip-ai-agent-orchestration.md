@@ -1,6 +1,7 @@
----
+﻿---
 title: Paperclip - AI 에이전트 팀을 운영하는 오픈소스 컨트롤 플레인
 date: 2026-04-02 09:00:00 +0900
+categories: [AI & Automation, AI Tools]
 categories: [AI & Automation, AI Tools]
 tags: [paperclip, ai-agents, orchestration, open-source, llm, automation, multi-agent]
 ---

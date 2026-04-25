@@ -1,8 +1,9 @@
----
+﻿---
 title: Jekyll Chirpy 테마에 Utterances 댓글 기능 추가하기
 date: 2025-12-29 10:00:00 +0900
-categories: [Blog, Chirpy]
-tags: [chirpy, utterances, comments, github]
+categories: [Blog, Setup]
+categories: [Blog, Setup]
+tags: [utterances, comments, jekyll]
 ---
 
 ## 개요

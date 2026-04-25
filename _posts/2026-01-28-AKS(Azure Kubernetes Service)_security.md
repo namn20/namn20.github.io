@@ -1,8 +1,9 @@
----
+﻿---
 title: "컨테이너(AKS) 환경의 취약점, 어떻게 진단해야 할까?"
 date: 2026-01-28 11:30:00 +0900
-categories: [Security, DevSecOps]
-tags: [kubernetes, aks, container, security, trivy, falco, devsecops]
+categories: [Security, Cloud Security]
+categories: [Security, Cloud Security]
+tags: [aks, kubernetes, azure, cloud-security]
 ---
 
 

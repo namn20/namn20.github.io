@@ -1,8 +1,9 @@
----
+﻿---
 layout: post
 title: "[보안 자동화] PentAGI + Colima + Gemini API: macOS에서 AI 침투테스트 에이전트 구축하기"
 date: 2026-04-03
-categories: [Security, PenTest]
+categories: [Security, Penetration Testing]
+categories: [Security, Penetration Testing]
 tags: [pentagi, colima, gemini, ai, pentest, docker, autonomous, security]
 image:
   path: /assets/img/posts/2026-04-03-pentagi/overview.png

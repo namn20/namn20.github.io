@@ -1,6 +1,7 @@
----
+﻿---
 title: "Prowler로 클라우드 보안 감시하기: AWS/Azure 멀티클라우드 거버넌스"
 date: 2026-04-22 10:00:00 +0900
+categories: [Security, Cloud Security]
 categories: [Security, Cloud Security]
 tags: [prowler, aws, azure, gcp, cloud-security, compliance, cis-benchmark]
 ---

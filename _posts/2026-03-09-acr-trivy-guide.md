@@ -1,9 +1,10 @@
----
+﻿---
 layout: post
 title: "[보안 가이드] AKS 환경 리스크 최소화: ACR과 Trivy를 활용한 컨테이너 취약점 진단 실무"
 date: 2026-03-06
-categories: [DevOps, Security, Kubernetes]
-tags: [kubernetes, aks, security, trivy, acr, devsecops]
+categories: [Security, Cloud Security]
+categories: [Security, Cloud Security]
+tags: [acr, trivy, azure, container]
 ---
 최근 클라우드 네이티브 환경(Cloud Native)이 표준으로 자리 잡으면서 Kubernetes(K8s) 보안의 중요성이 그 어느 때보다 강조되고 있습니다. 그중에서도 **컨테이너 이미지에 존재하는 취약점(CVE)**은 공격자가 클러스터 내부에 침투하기 위한 가장 쉬운 진입점(Entry Point)이 됩니다.
 

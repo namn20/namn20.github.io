@@ -1,6 +1,7 @@
----
+﻿---
 title: "NeuroSploit: AI 기반 자율 모의해킹 프레임워크 구축 및 실행 가이드"
 date: 2026-04-24 13:50:00 +0900
+categories: [Security, Penetration Testing]
 categories: [Security, Penetration Testing]
 tags: [neurosploit, ai, penetration-testing, security, llm, vulnerability-scanner]
 ---

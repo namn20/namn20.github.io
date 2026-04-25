@@ -1,9 +1,10 @@
----
+﻿---
 layout: post
 title: "GitLab CI에 Nexus IQ Server 연동 및 Threat Level 10 차단 정책 설정하기"
 date: 2026-01-18
-categories: [Security, AppSec]
-tags: [gitlab, ci/cd, nexus, sonatype, security, pipeline]
+categories: [Security, DevSecOps]
+categories: [Security, DevSecOps]
+tags: [nexus, pipeline, sca, devsecops]
 ---
 
 DevSecOps를 구축하다 보면 빌드 파이프라인에서 보안 취약점을 자동으로 점검하고, 심각한 위협이 발견되면 배포를 막아야 하는 상황이 옵니다.

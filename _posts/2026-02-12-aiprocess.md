@@ -1,8 +1,9 @@
----
+﻿---
 title: "소스코드 보안성 검토를 위한 Architect Agent 구축 가이드"
 date: 2026-02-12 17:00:00 +0900
-categories: [AI & Automation, Security AI]
-tags: [ai, llm, agent, code-review, architecture, security]
+categories: [AI & Automation, AI Security]
+categories: [AI & Automation, AI Security]
+tags: [ai, process, automation, security]
 ---
 
 소스코드 보안성 검토 프로세스에서 **첫 번째 에이전트인 Architect Agent**는 코드의 전체 구조를 파악하고, 이후 단계의 에이전트(취약점 분석, 비즈니스 로직 검토 등)가 효과적으로 작동할 수 있는 기반 정보를 생성하는 역할을 합니다. 이 글에서는 Architect Agent를 설계하고 구축하는 방법을 단계별로 안내합니다.

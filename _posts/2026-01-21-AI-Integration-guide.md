@@ -1,9 +1,10 @@
----
+﻿---
 layout: post
 title: "AI 정오탐 자동 분석 연동 가이드"
 date: 2026-01-21
-categories: [AI & Automation, Security AI] # 카테고리 설정
-tags: [LLM, Security, AI-Agent, False-Positive] # 태그 설정
+categories: [AI & Automation, AI Tools]
+categories: [AI & Automation, AI Tools]
+tags: [ai, integration, llm, guide]
 render_with_liquid: false
 ---
 

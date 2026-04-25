@@ -1,8 +1,9 @@
----
+﻿---
 title: "ISMS/ISO 27001 기술영역 취약점 진단: Azure·AWS·GCP 자산 식별 완전 가이드"
 date: 2026-02-25 07:00:00 +0900
-categories: [Security, Cloud]
-tags: [isms, iso27001, azure, aws, gcp, vulnerability-assessment, asset-inventory, cloud-security]
+categories: [Security, Cloud Security]
+categories: [Security, Cloud Security]
+tags: [cloud, asset, inventory, security]
 ---
 
 ISMS-P 및 ISO 27001 인증심사의 **기술영역 취약점 진단**에서 가장 먼저 해야 할 일은 **"진단 대상 자산 목록 확정"**입니다. 클라우드 환경은 자산이 수시로 생성·삭제되므로, 수동 목록 관리는 한계가 있습니다.

@@ -1,8 +1,9 @@
----
+﻿---
 title: "Azure PaaS DB 취약점 진단: Redis, PostgreSQL, MySQL 200대 스크립트 기반 체크리스트"
 date: 2026-02-11 10:00:00 +0900
-categories: [Security, Cloud]
-tags: [azure, paas, redis, postgresql, mysql, vulnerability-assessment, isms, iso27001]
+categories: [Security, Penetration Testing]
+categories: [Security, Penetration Testing]
+tags: [dbms, paas, security-check, pentest]
 ---
 
 보안팀에서 **ISMS / ISO 27001 인증 심사**를 준비하며 기술영역 취약점 진단을 수행해야 하는 상황입니다. 대상은 Azure PaaS 형태의 DBMS **200대**(Redis, PostgreSQL, MySQL)이며, 기존 On-Premise 서버 진단과는 완전히 다른 접근이 필요합니다.

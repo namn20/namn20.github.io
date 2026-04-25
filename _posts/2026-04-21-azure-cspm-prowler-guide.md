@@ -1,9 +1,10 @@
----
+﻿---
 layout: post
 title: "Azure 환경에서 CSPM 구축하기 — Prowler로 시작하는 클라우드 보안 자세 관리"
 date: 2026-04-21
-categories: [Security, Cloud]
-tags: [azure, cspm, prowler, cloud-security, 클라우드보안, 보안자세관리, iam, compliance, misconfiguration]
+categories: [Security, Cloud Security]
+categories: [Security, Cloud Security]
+tags: [azure, cspm, prowler, cloud-security, iam, compliance, misconfiguration]
 ---
 
 Microsoft Azure 환경을 운영하는 조직이라면 한 번쯤은 이런 질문을 받거나 스스로 떠올린 적이 있을 겁니다.

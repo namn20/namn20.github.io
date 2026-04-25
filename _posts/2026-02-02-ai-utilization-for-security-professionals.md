@@ -1,8 +1,9 @@
----
+﻿---
 title: "모의해킹 전문가를 위한 AI 활용 역량 극대화 3단계 가이드"
 date: 2026-02-02 10:00:00 +0900
-categories: [AI & Automation, Security AI] # 카테고리 설정
-tags: [ai, llm, automation, security, productivity, pentesting, infrastructure]
+categories: [AI & Automation, AI Security]
+categories: [AI & Automation, AI Security]
+tags: [ai, security, llm, utilization]
 ---
 
 AI 도구의 홍수 속에서 많은 직장인들이 혼란을 겪고 있습니다. 시스템 인프라 취약점을 진단하고 모의 해킹을 수행하는 보안 전문가 역시 마찬가지입니다. 이 글에서는 '증강', '자동화', '조직화'라는 3가지 단계를 통해 모의해킹 전문가가 AI를 활용하여 진단 업무의 효율과 깊이를 극대화하는 방법을, 실제 서비스 기반의 시나리오와 함께 설명합니다.

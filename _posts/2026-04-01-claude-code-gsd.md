@@ -1,6 +1,7 @@
----
+﻿---
 title: Claude Code + GSD - 기획부터 검증까지 자동화하는 법
 date: 2026-04-01 09:00:00 +0900
+categories: [AI & Automation, AI Tools]
 categories: [AI & Automation, AI Tools]
 tags: [claude-code, gsd, ai, coding-agent, automation, llm]
 ---

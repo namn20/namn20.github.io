@@ -1,7 +1,8 @@
----
+﻿---
 title: "[ISMS-P] 멀티 클라우드 환경 중견기업의 보안 정책, 조직, 자산 관리 (2.1.1 ~ 2.1.3)"
 date: 2026-04-16 10:00:00 +0900
-categories: [Security, ISMS-P]
+categories: [Security, Compliance]
+categories: [Security, Compliance]
 tags: [isms-p, multi-cloud, security, compliance, policy]
 ---
 
