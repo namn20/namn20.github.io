@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "CISO 및 경영진 보고를 위한 보안 KPI/KRI 설계와 거버넌스 장표 구성안"
-date: 2026-08-01 17:00:00 +0900
+date: 2026-08-01 09:00:00 +0900
 categories: [Security, Governance]
 tags: [security-kpi, security-kri, governance, ciso-report, executive-reporting]
 ---
