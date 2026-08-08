@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Terraform IaC 보안 검토 도구 및 도입 단계 가이드"
-date: 2026-08-07 16:30:00 +0900
+date: 2026-08-06 09:00:00 +0900
 categories: [Security, DevSecOps]
 tags: [terraform, iac, checkov, trivy, tflint, opa, devsecops, shift-left]
 ---

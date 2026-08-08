@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "tfsec을 활용한 Terraform IaC 보안 검사 및 CI/CD 파이프라인 연동 가이드"
-date: 2026-08-08 21:30:00 +0900
+date: 2026-08-06 09:30:00 +0900
 categories: [Security, DevSecOps]
 tags: [terraform, iac, tfsec, trivy, devsecops, github-actions, gitlab-ci]
 ---
